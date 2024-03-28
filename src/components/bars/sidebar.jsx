@@ -1,28 +1,77 @@
 import React from 'react'
 import { createContext,useContext } from 'react'
 import { useState } from 'react'
-import img1 from '../assets/rsz_1rsz_influenio.jpg'
+import img1 from '../../assets/rsz_1rsz_influenio.jpg'
 import {ChevronFirst, ChevronLast} from 'lucide-react'
+import { MoreVertical } from 'lucide-react'
+import { LifeBuoy,Receipt,Boxes,Package,UserCircle,BarChart3,LayoutDashboard,Settings} from 'lucide-react'
 
 const Sidebarcontext = createContext()
-export default function sidebar({children}) {
+export default function sidebar() {
   const[expanded,setExpanded]=useState(true)
   return (
-    <aside className={`h-screen ${expanded ? "w-56" : "w-20"}`}>
-     <nav className='h-full flex flex-col bg-white border-r shadow-sm'>
+    <aside className={`h-screen fixed ${expanded ? "w-56" : "w-20"}`}>
+     <nav className={`h-full flex flex-col bg-white ${expanded ? "shadow-md" : ""}`}>
       <div className='p-4 pb-2 flex justify-between items-center'>
         <img
          src={img1} 
          className={`overflow-hidden transition-all ${expanded ? 'w-32' : 'w-0'}`} 
          alt="" 
          />
-         <button onClick={()=>setExpanded(curr => !curr)} className='p-2' rounded-lg bg-gray-50 hover:bg-gray-200>
+         <button onClick={()=>setExpanded(curr => !curr)} className='p-2 rounded-lg bg-gray-50 hover:bg-gray-200'>
           {expanded ? <ChevronFirst /> : <ChevronLast/>}
          </button>
       </div>
 
       <Sidebarcontext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
+          <ul className="flex-1 px-3">
+          <Sidebaritem
+              icon={<LayoutDashboard size={20} />}
+              text="Dashboard"
+              alert
+              to="/"
+            />
+            <Sidebaritem
+              icon={<BarChart3 size={20} />}
+              text="Analytics"
+              active
+              to="/analytics"
+            />
+            <Sidebaritem
+              icon={<UserCircle size={20} />}
+              text="Users"
+              to="/users"
+            />
+            <Sidebaritem
+              icon={<Boxes size={20} />}
+              text="Inventory"
+              to="/inventory"
+            />
+            <Sidebaritem
+              icon={<Package size={20} />}
+              text="Orders"
+              alert
+              to="/orders"
+            />
+            <Sidebaritem
+              icon={<Receipt size={20} />}
+              text="Billings"
+              to="/billings"
+            />
+            <hr className="my-3" />
+            <Sidebaritem
+              icon={<Settings size={20} />}
+              text="Settings"
+              to="/settings"
+            />
+            <Sidebaritem
+              icon={<LifeBuoy size={20} />}
+              text="Support"
+              to="/support"
+            />
+          
+          
+          </ul>
         </Sidebarcontext.Provider>
 <div className='border-t flex p-3'>
   <img src="https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png" alt="" 
@@ -35,7 +84,7 @@ overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}`}>
   <div className='loading-4'>
     <h4 className='font-semibold'>John Doe</h4>
   </div>
-<morevertical size={20} />
+<MoreVertical size={20} />
 </div>
 </div>
      </nav>
