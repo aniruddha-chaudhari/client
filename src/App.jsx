@@ -11,10 +11,11 @@ const App = () => {
       <div className="App">
       <Sidebar />
         <Navbar />
-        
-        <Routes>
+        <div className='ml-[60px]'>
+        <Routes >
           <Route exact path="/" element={<Dashboard />} />
         </Routes>
+        </div>
       </div>
     </Router>
   );

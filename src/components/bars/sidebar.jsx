@@ -113,7 +113,8 @@ export function Sidebaritem({icon,text,active,alert}) {
         {text}
       </span>
       {alert && (
-        <div className={` absolute right-2 w-2 h-2 bg-rose-500 rounded-full ${
+        <div className={` absolute right-2 w-2 h-2
+         ${
           expanded ? "" : "top-2 right-4"
         }`}/>
       )}
