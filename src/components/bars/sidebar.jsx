@@ -1,6 +1,7 @@
 import React from 'react'
 import { createContext,useContext } from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import img1 from '../../assets/rsz_1rsz_influenio.jpg'
 import {ChevronFirst, ChevronLast} from 'lucide-react'
 import { MoreVertical } from 'lucide-react'
@@ -9,6 +10,11 @@ import { LifeBuoy,Receipt,Boxes,Package,UserCircle,BarChart3,LayoutDashboard,Set
 const Sidebarcontext = createContext()
 export default function sidebar() {
   const[expanded,setExpanded]=useState(true)
+  const [activeItem, setActiveItem] = useState('/');
+
+  const handleItemActive = (to) => {
+    setActiveItem(to);
+  };
   return (
     <aside className={`h-screen fixed ${expanded ? "w-56" : "w-20"}`}>
      <nav className={`h-full flex flex-col bg-white ${expanded ? "shadow-md" : ""}`}>
@@ -28,14 +34,17 @@ export default function sidebar() {
           <Sidebaritem
               icon={<LayoutDashboard size={20} />}
               text="Dashboard"
+              active={activeItem === '/'}
               alert
               to="/"
+              onActive={() => handleItemActive('/')}
             />
             <Sidebaritem
               icon={<BarChart3 size={20} />}
               text="Analytics"
-              active
+              active={activeItem === '/analytics'}
               to="/analytics"
+              onActive={() => handleItemActive('/analytics')}
             />
             <Sidebaritem
               icon={<UserCircle size={20} />}
@@ -92,45 +101,63 @@ overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}`}>
   )
 }
 
-export function Sidebaritem({icon,text,active,alert}) {
-  const { expanded } = useContext(Sidebarcontext)
-  return (
-    <li className={`
-    relative flex items-center py-2 px-3 my-1
-    font-medium rounded-md cursor-pointer
-    transition-colors group
-    ${
-      active
-      ? 'bg-gradient-to-tr from-fuchsia-50 to-rose-100 text-rose-500'
-      : 'hover:bg-rose-50 text-gray-600'
+
+export function Sidebaritem({ icon, text, active, alert, to, onActive }) {
+  const { expanded } = useContext(Sidebarcontext);
+  // Get the navigate function using useNavigate
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    onActive();
+    if (to) {
+      navigate(to);
     }
-    `}>
-      {icon}
-      <span className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0"
+  };
+
+  return (
+    <li
+      className={`
+        relative flex items-center py-2 px-3 my-1
+        font-medium rounded-md cursor-pointer
+        transition-colors group
+        ${
+          active
+            ? 'bg-gradient-to-tr from-fuchsia-50 to-rose-100 text-rose-500'
+            : 'hover:bg-rose-50 text-gray-600'
         }
-      `} >
+      `}
+      onClick={handleClick}
+    >
+      {icon}
+      <span
+        className={`overflow-hidden transition-all ${
+          expanded ? 'w-52 ml-3' : 'w-0'
+        }`}
+      >
         {text}
       </span>
       {alert && (
-        <div className={` absolute right-2 w-2 h-2
-         ${
-          expanded ? "" : "top-2 right-4"
-        }`}/>
+        <div
+          className={` absolute right-2 w-2 h-2
+            ${
+              expanded ? '' : 'top-2 right-4'
+            }`}
+        />
       )}
 
       {!expanded && (
         <div
-        className={`
-        absolute left-full rounded-md px-2 py-1 ml-6
-        bg-fuchsia-50 text-rose-500 text-sm
-        invisible opacity-20 -translate-x-3 transition-all
-        group-hover:visible group-hover:opacity-100
-        group-hover:translate-x-0
-        `}
-       >
-        {text}
-       </div> )}
+          className={`
+            absolute left-full rounded-md px-2 py-1 ml-6
+            bg-fuchsia-50 text-rose-500 text-sm
+            invisible opacity-20 -translate-x-3 transition-all
+            group-hover:visible group-hover:opacity-100
+            group-hover:translate-x-0
+          `}
+        >
+          {text}
+        </div>
+      )}
     </li>
-  )
+  );
 }
