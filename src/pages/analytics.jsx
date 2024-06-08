@@ -2,6 +2,7 @@ import React from 'react';
 import BigUserProfileCard from '../components/cards/Bigprofilecard';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+import TableBox from '../components/box/TableBox';
 
 const Analytics = () => {
   return (
@@ -106,6 +107,9 @@ const Analytics = () => {
             height={300}
           />
         </div>
+      </div>
+      <div>
+        <TableBox />
       </div>
     </div>
   );

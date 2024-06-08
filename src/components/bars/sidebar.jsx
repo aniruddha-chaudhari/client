@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import img1 from '../../assets/rsz_1rsz_influenio.jpg'
 import {ChevronFirst, ChevronLast} from 'lucide-react'
 import { MoreVertical } from 'lucide-react'
-import { LifeBuoy,Receipt,Boxes,Package,UserCircle,BarChart3,LayoutDashboard,Settings} from 'lucide-react'
+import { LifeBuoy,Receipt,Boxes,CalendarDays,UserCircle,BarChart3,LayoutDashboard,Settings} from 'lucide-react'
 
 const Sidebarcontext = createContext()
 export default function sidebar() {
@@ -35,7 +35,6 @@ export default function sidebar() {
               icon={<LayoutDashboard size={20} />}
               text="Dashboard"
               active={activeItem === '/'}
-              alert
               to="/"
               onActive={() => handleItemActive('/')}
             />
@@ -52,15 +51,12 @@ export default function sidebar() {
               to="/users"
             />
             <Sidebaritem
-              icon={<Boxes size={20} />}
-              text="Inventory"
-              to="/inventory"
-            />
-            <Sidebaritem
-              icon={<Package size={20} />}
-              text="Orders"
+              icon={<CalendarDays size={20} />}
+              text="Event"
               alert
-              to="/orders"
+              to="/event"
+              active={activeItem === '/event'}
+              onActive={() => handleItemActive('/event')}
             />
             <Sidebaritem
               icon={<Receipt size={20} />}
@@ -72,11 +68,6 @@ export default function sidebar() {
               icon={<Settings size={20} />}
               text="Settings"
               to="/settings"
-            />
-            <Sidebaritem
-              icon={<LifeBuoy size={20} />}
-              text="Support"
-              to="/support"
             />
           
           
@@ -138,7 +129,7 @@ export function Sidebaritem({ icon, text, active, alert, to, onActive }) {
       </span>
       {alert && (
         <div
-          className={` absolute right-2 w-2 h-2
+          className={`absolute right-2 w-2 h-2 rounded-full bg-rose-500
             ${
               expanded ? '' : 'top-2 right-4'
             }`}

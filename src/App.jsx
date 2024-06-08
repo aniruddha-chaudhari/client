@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Sidebar from './components/bars/sidebar';
 import Navbar from './components/bars/navbar'
 import Dashboard from './pages/dashboard'
-import Analytics from './pages/analytics';
+import Analytics from './pages/analytics'
+import Event from './pages/event'
 
 
 
@@ -18,6 +19,7 @@ const App = () => {
             <Routes>
               <Route exact path="/" element={<Dashboard />} />
              <Route exact path="/analytics" element={<Analytics />} />
+             <Route exact path="/event" element={<Event />}/>
             </Routes>
           </div>
         </div>
