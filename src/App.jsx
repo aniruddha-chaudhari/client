@@ -5,6 +5,8 @@ import Navbar from './components/bars/navbar'
 import Dashboard from './pages/dashboard'
 import Analytics from './pages/analytics'
 import Event from './pages/event'
+import Signup from './pages/signup'
+import Login from './pages/login';
 
 
 
@@ -20,6 +22,8 @@ const App = () => {
               <Route exact path="/" element={<Dashboard />} />
              <Route exact path="/analytics" element={<Analytics />} />
              <Route exact path="/event" element={<Event />}/>
+             <Route exact path="/signup" element={<Signup />}/>
+             <Route exact path="/login" element={<Login />}/>
             </Routes>
           </div>
         </div>
