@@ -3,7 +3,7 @@ import verifiedIcon from '../../assets/verified.svg'; // Import the SVG file
 
 const UserProfileCard = ({ profilePic, username, numPosts, numFollowers, vpost, sfollow, verified }) => {
   return (
-    <div className="flex items-center rounded-lg p-2">
+    <div className="flex items-center rounded-lg p-2 hover:shadow-md">
       <img
         src={profilePic}
         alt={`${username}'s profile`}

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Simpleuser = ({ profilePic, username }) => {
   return (
-    <div className="flex items-center rounded-lg p-2">
+    <div className="flex items-center rounded-lg p-2 hover:shadow-md">
       <img
         src={profilePic}
         alt={`${username}'s profile`}

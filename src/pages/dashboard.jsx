@@ -1,10 +1,25 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import UserProfileCard from '../components/cards/usercard';
 import CountCard from '../components/cards/countcard';
 import Tipsbox from '../components/box/Tipsbox';
 import Suggestionbox from '../components/box/suggestionbox';
+import axios from 'axios';
 
 const Dashboard = () => {
+  const [sub,setsub] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/mortal');
+        setsub(res.data.subscriberCount);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+ 
   return (
     <div className="flex flex-col h-full">
       <div className="mx-4 mt-4 bg-zinc-50 flex w-[calc(100%-16px)] h-full">
@@ -49,7 +64,7 @@ const Dashboard = () => {
             <div className="flex space-x-4">
               <CountCard
                 platform="youtube"
-                count={12345}
+                count={sub}
                 change={-500}
                 changePercentage={-4.0}
                 title="Likes"

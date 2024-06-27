@@ -20,7 +20,7 @@ const CountCard = ({ platform, count, change, changePercentage, title }) => {
   const changeBackgroundColor = isPositiveChange ? 'bg-green-100' : 'bg-red-100';
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mt-2 mx-2 w-1/2 h-[120px] relative">
+    <div className="bg-white rounded-lg shadow-md p-4 mt-2 mx-2 w-1/2 h-[120px] relative ">
       <div className="flex items-center mb-2">
         {getIcon()}
         <span className="ml-2 text-gray-600 uppercase font-bold">{title}</span>
