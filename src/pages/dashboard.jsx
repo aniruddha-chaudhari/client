@@ -3,23 +3,22 @@ import UserProfileCard from '../components/cards/usercard';
 import CountCard from '../components/cards/countcard';
 import Tipsbox from '../components/box/Tipsbox';
 import Suggestionbox from '../components/box/suggestionbox';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../store/slices/authSlice';
 
 const Dashboard = () => {
-  const [sub,setsub] = useState(0);
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector((state) => state.auth);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get('http://localhost:3000/mortal');
-        setsub(res.data.subscriberCount);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    if (!user) {
+      dispatch(getProfile());
+    }
+  }, [dispatch, user]);
 
-    fetchData();
-  }, []);
- 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!user) return <div>Please log in to view your dashboard.</div>;
+
   return (
     <div className="flex flex-col h-full">
       <div className="mx-4 mt-4 bg-zinc-50 flex w-[calc(100%-16px)] h-full">
