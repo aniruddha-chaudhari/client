@@ -1,32 +1,27 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import { signup } from '../store/slices/authSlice';
 import img from '../assets/Default_A_modern_social_media_dashboard_site_illustration_rend_3.jpg'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.auth);
     const navigate = useNavigate();
-
+  
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log('Attempting login...');
-      const resultAction = await dispatch(login({ email, password }));
-      console.log('Login result:', resultAction);
-      if (resultAction.type === login.fulfilled.type) {
-        console.log('Login successful, attempting navigation...');
-        navigate('/dashboard');
-      } else {
-        console.log('Login failed:', resultAction.error);
+      try {
+        await axios.post('http://localhost:3000/register', { username, email, password });
+        navigate('/');
+      } catch (error) {
+        console.error('Registration failed:', error.response.data.message);
       }
-    };
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -46,7 +41,7 @@ const Signup = () => {
                             <label className="block text-gray-700 mb-2" htmlFor="password">Password</label>
                             <input onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 border rounded" type="password" id="password" placeholder="Password" required />
                         </div>
-                        <button disabled={loading} className="w-full bg-rose-500 text-white py-2 rounded hover:bg-rose-600">Sign Up</button>
+                        <button className="w-full bg-rose-500 text-white py-2 rounded hover:bg-rose-600">Sign Up</button>
                     </form>
                     <p className="mt-6 text-center">
                         Already have an account? <Link to="/" className="text-rose-500 hover:underline">Login</Link>

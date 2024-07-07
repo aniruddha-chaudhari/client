@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import img1 from '../../assets/rsz_1rsz_influenio.jpg'
 import {ChevronFirst, ChevronLast} from 'lucide-react'
 import { MoreVertical } from 'lucide-react'
+import { useSelector } from 'react-redux'
 import { LifeBuoy,Receipt,Boxes,CalendarDays,UserCircle,BarChart3,LayoutDashboard,Settings} from 'lucide-react'
 
 const Sidebarcontext = createContext()
+
 export default function sidebar() {
+  const { username, email } = useSelector((state) => state.user);
   const[expanded,setExpanded]=useState(true)
   const [activeItem, setActiveItem] = useState('/');
 
@@ -34,9 +37,9 @@ export default function sidebar() {
           <Sidebaritem
               icon={<LayoutDashboard size={20} />}
               text="Dashboard"
-              active={activeItem === '/'}
-              to="/"
-              onActive={() => handleItemActive('/')}
+              active={activeItem === '/dashboard'}
+              to="/dashboard"
+              onActive={() => handleItemActive('/dashboard')}
             />
             <Sidebaritem
               icon={<BarChart3 size={20} />}
@@ -82,7 +85,7 @@ export default function sidebar() {
 flex justify-between items-center
 overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}`}>
   <div className='loading-4'>
-    <h4 className='font-semibold'>John Doe</h4>
+    <h4 className='font-semibold'>{username}</h4>
   </div>
 <MoreVertical size={20} />
 </div>

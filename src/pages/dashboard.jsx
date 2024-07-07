@@ -3,21 +3,32 @@ import UserProfileCard from '../components/cards/usercard';
 import CountCard from '../components/cards/countcard';
 import Tipsbox from '../components/box/Tipsbox';
 import Suggestionbox from '../components/box/suggestionbox';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProfile } from '../store/slices/authSlice';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/slices/userSlice';
 
-const Dashboard = () => {
-  const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (!user) {
-      dispatch(getProfile());
+
+const Dashboard = (userId) => {
+   const dispatch = useDispatch();
+   useEffect(() => {
+    const fetchData = async () => {
+        console.log('userId before request:', userId, typeof userId);
+        try {
+            // Send just the userId value, not an object
+            const response = await axios.post('http://localhost:3000/info/user', 
+                userId
+            );
+            const { email, username } = response.data;
+            dispatch(setUser({ email, username }));
+        } catch (error) {
+            console.error('Error fetching user data:', error.response ? error.response.data : error.message);
+        }
+    };
+
+    if (userId) {
+        fetchData();
     }
-  }, [dispatch, user]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!user) return <div>Please log in to view your dashboard.</div>;
+}, [userId]);
 
   return (
     <div className="flex flex-col h-full">
@@ -63,7 +74,7 @@ const Dashboard = () => {
             <div className="flex space-x-4">
               <CountCard
                 platform="youtube"
-                count={sub}
+                count={233434}
                 change={-500}
                 changePercentage={-4.0}
                 title="Likes"
@@ -96,3 +107,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+// 

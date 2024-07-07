@@ -1,23 +1,28 @@
 import React from 'react';
 import { Link,useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/slices/userSlice.js';
+import axios from 'axios';
+
+
+
 import img from '../assets/Default_A_modern_social_media_dashboard_site_illustration_rend_3.jpg'
 
 
 const Login = () => {
-  const[email, setEmail] = useState('');
-  const[password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resultAction = dispatch(login({ email, password }));
-    if (resultAction.type === login.fulfilled.type) {
-      navigate('/dashboard'); // Use navigate directly to change the route
+    try {
+      await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error.response.data.message);
     }
   };
 
@@ -42,7 +47,7 @@ const Login = () => {
             </label>
             <a href="#" className="text-rose-500 hover:underline">Forgot Password?</a>
           </div>
-          <button disabled={loading} className="w-full bg-rose-500 text-white py-2 rounded hover:bg-rose-600">Sign In</button>
+          <button className="w-full bg-rose-500 text-white py-2 rounded hover:bg-rose-600">Sign In</button>
         </form>
         <p className="mt-6 text-center">
           Don’t have an account? <Link to="/signup" className="text-rose-500 hover:underline">Sign Up</Link>

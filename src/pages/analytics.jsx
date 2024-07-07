@@ -1,10 +1,13 @@
 import React from 'react';
+import { useEffect} from 'react';
 import BigUserProfileCard from '../components/cards/Bigprofilecard';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import TableBox from '../components/box/TableBox';
 
+
 const Analytics = () => {
+
   return (
     <div className="mx-4 overflow-hidden">
       <div className="grid grid-cols-12">
